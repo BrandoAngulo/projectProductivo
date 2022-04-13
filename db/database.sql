@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-04-2022 a las 05:49:19
--- Versión del servidor: 10.4.24-MariaDB
--- Versión de PHP: 7.4.28
+-- Tiempo de generación: 14-04-2022 a las 00:37:52
+-- Versión del servidor: 10.4.18-MariaDB
+-- Versión de PHP: 8.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,13 +31,6 @@ CREATE TABLE `cliente` (
   `id_cliente` int(11) NOT NULL,
   `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `cliente`
---
-
-INSERT INTO `cliente` (`id_cliente`, `id_user`) VALUES
-(1, 2);
 
 -- --------------------------------------------------------
 
@@ -112,6 +105,17 @@ INSERT INTO `estadopedido` (`id_estado`, `proceso`) VALUES
 (4, 'en facturacion'),
 (5, 'en ruta'),
 (6, 'Listo');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `login`
+--
+
+CREATE TABLE `login` (
+  `roles_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -1271,12 +1275,25 @@ CREATE TABLE `pedido` (
   `id_estado` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `pedido`
+-- Estructura de tabla para la tabla `roles`
 --
 
-INSERT INTO `pedido` (`id_pedido`, `codigo_pedido`, `id_cliente`, `id_estado`) VALUES
-(1, 5050, 1, 6);
+CREATE TABLE `roles` (
+  `id_rol` int(11) NOT NULL,
+  `descripcion` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+INSERT INTO `roles` (`id_rol`, `descripcion`) VALUES
+(1, 'Admin'),
+(2, 'Vendedor'),
+(3, 'Cliente');
 
 -- --------------------------------------------------------
 
@@ -1298,15 +1315,6 @@ CREATE TABLE `usuario` (
   `rol` enum('admin','vendedor','cliente') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `usuario`
---
-
-INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `cedula`, `departamento`, `ciudad`, `direccion`, `correo`, `celular`, `referido`, `rol`) VALUES
-(1, 'jaku', 'maku', 11441231, 24, 1009, 'cra12#5213', 'asdas@as.com', 3102552510, 255, 'vendedor'),
-(2, 'mia', 'mania', 11440551623, 1, 1, 'cra45#12-50', 'cra@.com', 3102556978, NULL, 'cliente'),
-(3, 'rio', 'janeiro', 11440551623, 2, 2, 'cra45#12-50', 'cra@.com', 3102556978, NULL, 'admin');
-
 -- --------------------------------------------------------
 
 --
@@ -1318,13 +1326,6 @@ CREATE TABLE `vendedor` (
   `id_user` int(11) NOT NULL,
   `codigo_vendedor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `vendedor`
---
-
-INSERT INTO `vendedor` (`id_vendedor`, `id_user`, `codigo_vendedor`) VALUES
-(1, 1, 1);
 
 --
 -- Índices para tablas volcadas
@@ -1350,6 +1351,12 @@ ALTER TABLE `estadopedido`
   ADD PRIMARY KEY (`id_estado`);
 
 --
+-- Indices de la tabla `login`
+--
+ALTER TABLE `login`
+  ADD KEY `uslog_FK` (`user_id`);
+
+--
 -- Indices de la tabla `municipios`
 --
 ALTER TABLE `municipios`
@@ -1363,6 +1370,12 @@ ALTER TABLE `pedido`
   ADD PRIMARY KEY (`id_pedido`),
   ADD KEY `PedcliUsu_FK` (`id_cliente`),
   ADD KEY `pedEsta_FK` (`id_estado`);
+
+--
+-- Indices de la tabla `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id_rol`);
 
 --
 -- Indices de la tabla `usuario`
@@ -1414,10 +1427,16 @@ ALTER TABLE `pedido`
   MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `vendedor`
@@ -1434,6 +1453,12 @@ ALTER TABLE `vendedor`
 --
 ALTER TABLE `cliente`
   ADD CONSTRAINT `cliUsu_FK` FOREIGN KEY (`id_user`) REFERENCES `usuario` (`id_usuario`);
+
+--
+-- Filtros para la tabla `login`
+--
+ALTER TABLE `login`
+  ADD CONSTRAINT `uslog_FK` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id_usuario`);
 
 --
 -- Filtros para la tabla `municipios`
