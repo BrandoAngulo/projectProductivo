@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-04-2022 a las 00:37:52
+-- Tiempo de generación: 16-04-2022 a las 20:12:15
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.3
 
@@ -31,6 +31,13 @@ CREATE TABLE `cliente` (
   `id_cliente` int(11) NOT NULL,
   `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`id_cliente`, `id_user`) VALUES
+(2, 3);
 
 -- --------------------------------------------------------
 
@@ -114,8 +121,19 @@ INSERT INTO `estadopedido` (`id_estado`, `proceso`) VALUES
 
 CREATE TABLE `login` (
   `roles_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `log_id` int(11) NOT NULL,
+  `descripcion` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `login`
+--
+
+INSERT INTO `login` (`roles_id`, `user_id`, `log_id`, `descripcion`) VALUES
+(1, 1, 1, 'administrador del sistema'),
+(2, 2, 2, 'VENDEDOR'),
+(3, 3, 3, 'Cliente');
 
 -- --------------------------------------------------------
 
@@ -1275,6 +1293,13 @@ CREATE TABLE `pedido` (
   `id_estado` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `pedido`
+--
+
+INSERT INTO `pedido` (`id_pedido`, `codigo_pedido`, `id_cliente`, `id_estado`) VALUES
+(2, 1, 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -1311,9 +1336,18 @@ CREATE TABLE `usuario` (
   `direccion` varchar(30) NOT NULL,
   `correo` varchar(30) NOT NULL,
   `celular` bigint(10) NOT NULL,
-  `referido` bigint(11) DEFAULT NULL,
-  `rol` enum('admin','vendedor','cliente') NOT NULL
+  `referido` varchar(30) DEFAULT NULL,
+  `rol` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `cedula`, `departamento`, `ciudad`, `direccion`, `correo`, `celular`, `referido`, `rol`) VALUES
+(1, 'usuario', 'fefe', 1144055178, 24, 1009, 'cra49#13-66', 'stiva@fff.com', 3105182526, '', 1),
+(2, 'klein', 'castilla', 1144055177, 24, 1009, 'cra49#13-66', 'stiva@fff.com', 3105182526, '', 2),
+(3, 'ines', 'amaran', 1144055187, 24, 1009, 'cra49#13-66', 'stiva@fff.com', 3105182526, 'local', 3);
 
 -- --------------------------------------------------------
 
@@ -1326,6 +1360,13 @@ CREATE TABLE `vendedor` (
   `id_user` int(11) NOT NULL,
   `codigo_vendedor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `vendedor`
+--
+
+INSERT INTO `vendedor` (`id_vendedor`, `id_user`, `codigo_vendedor`) VALUES
+(1, 2, 999);
 
 --
 -- Índices para tablas volcadas
@@ -1354,7 +1395,9 @@ ALTER TABLE `estadopedido`
 -- Indices de la tabla `login`
 --
 ALTER TABLE `login`
-  ADD KEY `uslog_FK` (`user_id`);
+  ADD PRIMARY KEY (`log_id`),
+  ADD KEY `logUser_FK` (`user_id`),
+  ADD KEY `logRol_FK` (`roles_id`);
 
 --
 -- Indices de la tabla `municipios`
@@ -1383,7 +1426,8 @@ ALTER TABLE `roles`
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id_usuario`),
   ADD KEY `usuDep_FK` (`departamento`),
-  ADD KEY `usuMuni_FK` (`ciudad`);
+  ADD KEY `usuMuni_FK` (`ciudad`),
+  ADD KEY `UsuRol_FK` (`rol`);
 
 --
 -- Indices de la tabla `vendedor`
@@ -1400,7 +1444,7 @@ ALTER TABLE `vendedor`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `departamentos`
@@ -1415,6 +1459,12 @@ ALTER TABLE `estadopedido`
   MODIFY `id_estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT de la tabla `login`
+--
+ALTER TABLE `login`
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de la tabla `municipios`
 --
 ALTER TABLE `municipios`
@@ -1424,7 +1474,7 @@ ALTER TABLE `municipios`
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -1436,7 +1486,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `vendedor`
@@ -1458,6 +1508,8 @@ ALTER TABLE `cliente`
 -- Filtros para la tabla `login`
 --
 ALTER TABLE `login`
+  ADD CONSTRAINT `logRol_FK` FOREIGN KEY (`roles_id`) REFERENCES `roles` (`id_rol`),
+  ADD CONSTRAINT `logUser_FK` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id_usuario`),
   ADD CONSTRAINT `uslog_FK` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id_usuario`);
 
 --
@@ -1477,6 +1529,7 @@ ALTER TABLE `pedido`
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
+  ADD CONSTRAINT `UsuRol_FK` FOREIGN KEY (`rol`) REFERENCES `roles` (`id_rol`),
   ADD CONSTRAINT `usuDep_FK` FOREIGN KEY (`departamento`) REFERENCES `departamentos` (`id_departamento`),
   ADD CONSTRAINT `usuMuni_FK` FOREIGN KEY (`ciudad`) REFERENCES `municipios` (`id_municipio`);
 
