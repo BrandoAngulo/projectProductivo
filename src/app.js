@@ -1,7 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 //importacion de Routes o rutas
-import languageRoutes from "./routes/language.routes";
+import languageRoutes from "./routes/routes";
 
 const app = express();
 //settings
@@ -13,6 +13,6 @@ app.use(express.json());//usando json para poder enviar peticiones json a mi ser
 
 //Routes
 //para poder ingresar hay que ingresar en el explorador con la ruta por que si no va a salir error 404
-app.use("/api/languages", languageRoutes); 
+app.use("/api/project", languageRoutes); 
 
 export default app;

@@ -1,14 +1,15 @@
 ### GET = obtener lo que esta en la ip
 ###LISTAR TODO O / numero a seleccionar para ver por un solo dato
-http://localhost:3000/api/languages
+http://localhost:3000/api/project
 
 ### UPDATE
-PUT  http://localhost:3000/api/languages/4
+PUT  http://localhost:3000/api/project/2
 Content-Type: application/json
 
 {
-  "name": "java E",
-  "programmers": "25"
+  "codigo_pedido": 3052,
+  "id_cliente": 3,
+  "id_estado": 2
 }
 
 ### insertar peticiones POST

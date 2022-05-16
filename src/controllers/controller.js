@@ -3,7 +3,7 @@ import { getConnection } from "../database/database";
 //async = nos permiten indicar que una funcion es asincrona osea que los procesos duran un tiempo
 //await = nos permite indicar que debemos esperar a que finalice cierto bloque de codigo
 //LISTAR
-const getLanguages = async (req, res) => {
+const getpedidos = async (req, res) => {
     try {
         const connection = await getConnection();
         const result = await connection.query("SELECT id_pedido, codigo_pedido,id_cliente, id_estado FROM pedido");
@@ -16,7 +16,7 @@ const getLanguages = async (req, res) => {
 
 //obtener la peticion del lenguage por el parametro osea por medio de la url solo 1 un dato
 //LISTAR 1 DATO
-const getLanguage = async (req, res) => {
+const getpedido = async (req, res) => {
 
 try {
     console.log(req.params);
@@ -31,17 +31,17 @@ try {
 };
 
 //UPDATE
-const updateLanguage = async (req, res) => {
-    const {id} = req.params;
-    const {name, programmers} = req.body;
-if (id === undefined || name === undefined || programmers === undefined) {
-    res.status(400).json({message: "Bad Pequest. please fill all field"});
+const updatePedido = async (req, res) => {
+    const {id_pedido} = req.params;
+    const {codigo_pedido, id_cliente,id_estado} = req.body;
+if (id_pedido === undefined, codigo_pedido === undefined || id_cliente === undefined || id_estado === undefined ) {
+    res.status(400).json({message: "Bad Pequest. please fill all field "+id_pedido+" "+codigo_pedido+" "+id_cliente+" "+id_estado});
 }
     try {
-        const language = {id, name, programmers};
+        const pedido = {id_pedido, codigo_pedido, id_cliente, id_estado};
         console.log(req.params);
         const connection = await getConnection();
-        const result = await connection.query("UPDATE language SET ? WHERE id = ?",[language,id]);//el primer ? es por los parametros que se le dan y el segundo para el id que se va a editar 
+        const result = await connection.query("UPDATE pedido SET ? WHERE id_pedido = ?",[pedido,id_pedido]);//el primer ? es por los parametros que se le dan y el segundo para el id que se va a editar 
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -85,9 +85,9 @@ const addLanguage = async (req, res) => {
 };
 //exportar la funcion para poderla importar en cualquier otro lugar, se exporta mediante la llave methods
 export const methods = {
-    getLanguages,
-    getLanguage,
+    getpedidos,
+    getpedido,
     addLanguage,
     deleteLanguage,
-    updateLanguage
+    updatePedido
 };
