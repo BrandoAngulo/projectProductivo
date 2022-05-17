@@ -1,6 +1,6 @@
 ### GET = obtener lo que esta en la ip
 ###LISTAR TODO O / numero a seleccionar para ver por un solo dato
-http://localhost:3000/api/pedido/2
+http://localhost:3000/api/usuario/2
 
 ### UPDATE
 PUT  http://localhost:3000/api/pedido/2
