@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 //importacion de Routes o rutas
 import pedidoRoutes from "./routes/routes";
-import usuarioRoutes from "./routes/usuarioRoutes";
+import usuarioRoutes from "./routes/usuario.routes";
 
 const app = express();
 //settings
