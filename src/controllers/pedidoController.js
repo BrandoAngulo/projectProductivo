@@ -20,9 +20,9 @@ const getpedido = async (req, res) => {
 
 try {
     console.log(req.params);
-    const {id}=req.params;
+    const {id_pedido}=req.params;
     const connection = await getConnection();
-    const result = await connection.query("SELECT id, name, programmers FROM language WHERE id = ?",id);//recibe el parametro id que hemos hecho con la const por parametro 
+    const result = await connection.query("SELECT id_pedido, codigo_pedido,id_cliente, id_estado FROM pedido WHERE id_pedido = ?",id_pedido);//recibe el parametro id que hemos hecho con la const por parametro 
     res.json(result);
 } catch (error) {
     res.status(500);
@@ -50,13 +50,13 @@ if (id_pedido === undefined, codigo_pedido === undefined || id_cliente === undef
     };
 
 //DELETE
-const deleteLanguage = async (req, res) => {
+const deletePedido = async (req, res) => {
 
     try {
         console.log(req.params);
-        const {id}=req.params;
+        const {id_pedido}=req.params;
         const connection = await getConnection();
-        const result = await connection.query("DELETE FROM language WHERE id = ?",id);//recibe el parametro id que hemos hecho con la const por parametro 
+        const result = await connection.query("DELETE FROM pedido WHERE id_pedido = ?",id_pedido);//recibe el parametro id que hemos hecho con la const por parametro 
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -65,19 +65,19 @@ const deleteLanguage = async (req, res) => {
     };
 
 //INSERTAR 
-const addLanguage = async (req, res) => {
+const addPedido = async (req, res) => {
     try {
         //creacion de constantes que tenemos en la db para asi hacer la inserccion de datos a la misma db 
-        const {name, programmers}=req.body; //con req.body quiere decir que enviamos la peticion por el cuerpo del codigo
+        const {codigo_pedido, id_cliente, id_estado}=req.body; //con req.body quiere decir que enviamos la peticion por el cuerpo del codigo
         //condicional si alguno de los campos se envian vacios
-        if (name === undefined || programmers === undefined) {
+        if (codigo_pedido === undefined || id_cliente === undefined || id_estado === undefined) {
             res.status(400).json({message: "Bad Request. Please fill all field. "});//solicitud mala. porfavor rellene todas los campos
         }
         //creacion de objeto para hacer la inserccion sin necesidad de digitar el query con tantos datos
-        const language = {name, programmers};
+        const pedido = {codigo_pedido, id_cliente, id_estado};
         const connection = await getConnection();                                     
-        const result = await connection.query("INSERT INTO language SET ?",language);
-        res.json({message: "Language added"});//respuesta cuando se agregue el lenguaje
+        const result = await connection.query("INSERT INTO pedido SET ?",pedido);
+        res.json({message: "pedido added"});//respuesta cuando se agregue el lenguaje
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -87,7 +87,7 @@ const addLanguage = async (req, res) => {
 export const methods = {
     getpedidos,
     getpedido,
-    addLanguage,
-    deleteLanguage,
+    addPedido,
+    deletePedido,
     updatePedido
 };

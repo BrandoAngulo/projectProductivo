@@ -1,6 +1,6 @@
 ### GET = obtener lo que esta en la ip
 ###LISTAR TODO O / numero a seleccionar para ver por un solo dato
-http://localhost:3000/api/project
+http://localhost:3000/api/usuario
 
 ### UPDATE
 PUT  http://localhost:3000/api/project/2
@@ -13,15 +13,16 @@ Content-Type: application/json
 }
 
 ### insertar peticiones POST
-POST http://localhost:3000/api/languages
+POST http://localhost:3000/api/project
 Content-Type: application/json
 
   {
-    "name": "C#",
-    "programmers": 50 
+  "codigo_pedido": 3054,
+  "id_cliente": 2,
+  "id_estado": 5
   }
 
 ### DELETE
-DELETE http://localhost:3000/api/languages/5
+DELETE http://localhost:3000/api/project/3
 
 
