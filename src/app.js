@@ -1,7 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 //importacion de Routes o rutas
-import pedidoRoutes from "./routes/routes";
+import pedidoRoutes from "./routes/pedido.routes";
 import usuarioRoutes from "./routes/usuario.routes";
 
 const app = express();
@@ -14,7 +14,7 @@ app.use(express.json());//usando json para poder enviar peticiones json a mi ser
 
 //Routes
 //para poder ingresar hay que ingresar en el explorador con la ruta por que si no va a salir error 404
-app.use("/api/pedido", pedidoRoutes); 
-app.use("/api/usuario", usuarioRoutes); 
+app.use("/api/pedidos", pedidoRoutes); 
+app.use("/api/usuarios", usuarioRoutes); 
 
 export default app;

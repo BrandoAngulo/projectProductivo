@@ -29,9 +29,9 @@ const getusuario = async(req, res) => {
 //INSERTAR
 const addUsuario = async(req, res) => {
     try {
-        const {id_usuario,nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol} = req.body;
+        const {nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol} = req.body;
         
-        if (id_usuario ===undefined ||nombre === undefined || cedula === undefined || departamento === undefined || ciudad === undefined || direccion === undefined || correo === undefined ||  celular === undefined || referido === undefined || rol === undefined) {
+        if (nombre === undefined || cedula === undefined || departamento === undefined || ciudad === undefined || direccion === undefined || correo === undefined ||  celular === undefined || referido === undefined || rol === undefined) {
             res.status(400).json({message: "Bad Pequest. please fill all field "});
         };
 
