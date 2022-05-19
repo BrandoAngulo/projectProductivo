@@ -26,6 +26,27 @@ const getusuario = async(req, res) => {
     }
 };
 
+//INSERTAR
+const addUsuario = async(req, res) => {
+    try {
+        const {id_usuario,nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol} = req.body;
+        
+        if (id_usuario ===undefined ||nombre === undefined || cedula === undefined || departamento === undefined || ciudad === undefined || direccion === undefined || correo === undefined ||  celular === undefined || referido === undefined || rol === undefined) {
+            res.status(400).json({message: "Bad Pequest. please fill all field "});
+        };
+
+        const connection = await getConnection();
+        const datos = {nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol};
+        const result = await connection.query("INSERT INTO usuario SET ?",datos);
+        res.json("Message:  User added");
+        console.log(result);
+    } catch (error) {
+        res.status(error);
+        res.send(error.message);
+    }
+}
+
+
 //DELETE
 const deleteUsuario = async(req, res) => {
     try {
@@ -65,6 +86,7 @@ const updateUsuario = async (req, res) => {
 export const methods = {
     getusuarios,
     getusuario,
+    addUsuario,
     deleteUsuario,
     updateUsuario
 };

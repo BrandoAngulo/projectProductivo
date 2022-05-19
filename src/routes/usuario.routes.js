@@ -8,6 +8,8 @@ const router = Router();
 router.get("/", usuarioController.getusuarios);
 //listar un usuario
 router.get("/:id_usuario", usuarioController.getusuario);
+//INSERTAR
+router.post("/", usuarioController.addUsuario);
 //DELETE  
 router.delete("/:id_usuario", usuarioController.deleteUsuario);
 //UPDATE
