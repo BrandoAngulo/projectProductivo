@@ -31,14 +31,40 @@ const deleteUsuario = async(req, res) => {
     try {
         const {id_usuario} = req.params;
         const connection = await getConnection();
-        const result = await connection.query("DELETE FROM usuario WHERE id_usuario = ?",[usuario, id_usuario]);
+        const result = await connection.query("DELETE FROM usuario WHERE id_usuario = ?", id_usuario);
+        console.log(result);
+        res.json(result);
     } catch (error) {
         res.status(500);
         res.send(error.message);
     }
 };
 
+//UPDATE
+const updateUsuario = async (req, res) => {
+    const {id_usuario} = req.params;
+    const {nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol} = req.body; 
+    
+    if (id_usuario ===undefined ||nombre === undefined || cedula === undefined || departamento === undefined || ciudad === undefined || direccion === undefined || correo === undefined ||  celular === undefined || referido === undefined || rol === undefined) {
+        res.status(400).json({message: "Bad Pequest. please fill all field "});
+    }
+    try {
+            const datos = {id_usuario, nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol}; 
+            console.log(req.params);
+            const connection = await getConnection();
+            const result = await connection.query("UPDATE usuario SET ? WHERE id_usuario = ?",[datos,id_usuario]);
+            res.json(result);
+    } catch (error) {
+        res.error(500);
+        res.send(error.message);
+    }
+
+
+}
+
 export const methods = {
     getusuarios,
-    getusuario
+    getusuario,
+    deleteUsuario,
+    updateUsuario
 };
