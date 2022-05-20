@@ -1,25 +1,31 @@
 ### GET = obtener lo que esta en la ip
 ###LISTAR TODO O / numero a seleccionar para ver por un solo dato
-http://localhost:3000/api/usuario/2
+http://localhost:3000/api/pedidos
 
 ### UPDATE
-PUT  http://localhost:3000/api/pedido/2
+PUT  http://localhost:3000/api/pedidos/2
 Content-Type: application/json
 
 {
-  "codigo_pedido": 3052,
-  "id_cliente": 3,
-  "id_estado": 2
+    "codigo_pedido": 1,
+    "id_cliente": 2,
+    "id_estado": 2
 }
 
 ### insertar peticiones POST
-POST http://localhost:3000/api/pedido
+POST http://localhost:3000/api/usuario
 Content-Type: application/json
 
   {
-  "codigo_pedido": 3054,
-  "id_cliente": 2,
-  "id_estado": 5
+    "nombre": "root",
+    "cedula": 1144055179,
+    "departamento": 24,
+    "ciudad": 1009,
+    "direccion": "cra47#15-22",
+    "correo": "claro.com",
+    "celular": 3112254525,
+    "referido": "12",
+    "rol": 1
   }
 
 ### DELETE

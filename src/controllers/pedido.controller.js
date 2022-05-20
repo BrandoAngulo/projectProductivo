@@ -6,7 +6,7 @@ import { getConnection } from "../database/database";
 const getpedidos = async (req, res) => {
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT id_pedido, codigo_pedido,id_cliente, id_estado FROM pedido");
+        const result = await connection.query("SELECT p.id_pedido, p.codigo_pedido, c.id_cliente, u.nombre cliente, e.proceso FROM pedido p INNER join estadopedido e on p.id_estado = e.id_estado INNER join cliente c on p.id_cliente = c.id_cliente INNER JOIN usuario u on c.id_user = u.id_usuario");
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -22,7 +22,7 @@ try {
     console.log(req.params);
     const {id_pedido}=req.params;
     const connection = await getConnection();
-    const result = await connection.query("SELECT id_pedido, codigo_pedido,id_cliente, id_estado FROM pedido WHERE id_pedido = ?",id_pedido);//recibe el parametro id que hemos hecho con la const por parametro 
+    const result = await connection.query("SELECT p.id_pedido, p.codigo_pedido, c.id_cliente, u.nombre cliente, e.proceso FROM pedido p INNER join estadopedido e on p.id_estado = e.id_estado INNER join cliente c on p.id_cliente = c.id_cliente INNER JOIN usuario u on c.id_user = u.id_usuario WHERE p.id_pedido = ?",id_pedido);//recibe el parametro id que hemos hecho con la const por parametro 
     res.json(result);
 } catch (error) {
     res.status(500);
@@ -35,7 +35,7 @@ const updatePedido = async (req, res) => {
     const {id_pedido} = req.params;
     const {codigo_pedido, id_cliente,id_estado} = req.body;
 if (id_pedido === undefined, codigo_pedido === undefined || id_cliente === undefined || id_estado === undefined ) {
-    res.status(400).json({message: "Bad Pequest. please fill all field "+id_pedido+" "+codigo_pedido+" "+id_cliente+" "+id_estado});
+    res.status(400).json({message: "Bad Pequest. please fill all field "});
 }
     try {
         const pedido = {id_pedido, codigo_pedido, id_cliente, id_estado};

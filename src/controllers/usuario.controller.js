@@ -4,7 +4,7 @@ import { getConnection } from "../database/database";
 const getusuarios = async (req, res) => {
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT id_usuario, nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol FROM usuario");
+        const result = await connection.query("SELECT u.id_usuario, u.nombre, u.apellido, u.cedula, d.nombre departamento, m.nombre ciudad, u.direccion, u.correo, u.referido, r.descripcion perfil FROM usuario u inner JOIN roles r ON u.rol = r.id_rol inner join departamentos d on u.departamento = d.id_departamento inner join municipios m on u.ciudad = m.id_municipio;");
         res.json(result);
         console.log(result);
     } catch (error) {
@@ -17,7 +17,7 @@ const getusuario = async(req, res) => {
     try {
         const {id_usuario} = req.params;
         const connection = await getConnection();
-        const result = await connection.query("SELECT id_usuario, nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol FROM usuario WHERE id_usuario = ? ",id_usuario);
+        const result = await connection.query("SELECT u.id_usuario, u.nombre, u.apellido, u.cedula, d.nombre departamento, m.nombre ciudad, u.direccion, u.correo, u.referido, r.descripcion perfil FROM usuario u inner JOIN roles r ON u.rol = r.id_rol inner join departamentos d on u.departamento = d.id_departamento inner join municipios m on u.ciudad = m.id_municipio WHERE u.id_usuario = ? ",id_usuario);
         res.json(result);
         console.log(result);    
     } catch (error) {
