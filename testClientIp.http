@@ -17,16 +17,16 @@ POST http://localhost:3000/api/usuarios
 Content-Type: application/json
 
   {
-    "nombre": "root",
+    "nombre": "root3",
     "cedula": 1144055179,
     "departamento": 24,
     "ciudad": 1009,
     "direccion": "cra47#15-22",
-    "correo": "claro.com",
+    "correo": "mov.com",
     "celular": 3112254525,
-    "referido": "12",
+    "referido": "2",
     "rol": 1,
-    "pass": 12345
+    "pass": 123456789
   }
 
 ### DELETE
