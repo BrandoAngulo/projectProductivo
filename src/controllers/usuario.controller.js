@@ -1,17 +1,20 @@
 import { getConnection } from "../database/database";
+//import bcryptjs para el hash de password
+import bcrypt from "bcryptjs/dist/bcrypt";
+import bcryptjs from "bcryptjs";
 
-//LISTAR
+ //LISTAR
 const getusuarios = async (req, res) => {
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT u.id_usuario, u.nombre, u.apellido, u.cedula, d.nombre departamento, m.nombre ciudad, u.direccion, u.correo, u.referido, r.descripcion perfil FROM usuario u inner JOIN roles r ON u.rol = r.id_rol inner join departamentos d on u.departamento = d.id_departamento inner join municipios m on u.ciudad = m.id_municipio;");
+        const result = await connection.query("SELECT u.id_usuario, u.nombre, u.apellido, u.cedula, d.nombre departamento, m.nombre ciudad, u.direccion, u.correo, u.referido, r.descripcion perfil, u.pass password FROM usuario u inner JOIN roles r ON u.rol = r.id_rol inner join departamentos d on u.departamento = d.id_departamento inner join municipios m on u.ciudad = m.id_municipio;");
         res.json(result);
         console.log(result);
     } catch (error) {
         res.status(500);
         res.send(error.message);
     }
-};
+}; 
 //listar con id
 const getusuario = async(req, res) => {
     try {
@@ -29,14 +32,15 @@ const getusuario = async(req, res) => {
 //INSERTAR
 const addUsuario = async(req, res) => {
     try {
-        const {nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol} = req.body;
+        const {nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol, pass} = req.body;
         
-        if (nombre === undefined || cedula === undefined || departamento === undefined || ciudad === undefined || direccion === undefined || correo === undefined ||  celular === undefined || referido === undefined || rol === undefined) {
+        if (nombre === undefined || cedula === undefined || departamento === undefined || ciudad === undefined || direccion === undefined || correo === undefined ||  celular === undefined || referido === undefined || rol === undefined || pass === undefined ) {
             res.status(400).json({message: "Bad Pequest. please fill all field "});
         };
 
+        //let passHash = await bcryptjs.hash(pass, 8)
+        const datos = {nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol, pass:passHash};
         const connection = await getConnection();
-        const datos = {nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol};
         const result = await connection.query("INSERT INTO usuario SET ?",datos);
         res.json("Message:  User added");
         console.log(result);
@@ -64,13 +68,13 @@ const deleteUsuario = async(req, res) => {
 //UPDATE
 const updateUsuario = async (req, res) => {
     const {id_usuario} = req.params;
-    const {nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol} = req.body; 
+    const {nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol, pass} = req.body; 
     
-    if (id_usuario ===undefined ||nombre === undefined || cedula === undefined || departamento === undefined || ciudad === undefined || direccion === undefined || correo === undefined ||  celular === undefined || referido === undefined || rol === undefined) {
+    if (id_usuario ===undefined ||nombre === undefined || cedula === undefined || departamento === undefined || ciudad === undefined || direccion === undefined || correo === undefined ||  celular === undefined || referido === undefined || rol === undefined || pass === undefined) {
         res.status(400).json({message: "Bad Pequest. please fill all field "});
     }
     try {
-            const datos = {id_usuario, nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol}; 
+            const datos = {id_usuario, nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol, pass}; 
             console.log(req.params);
             const connection = await getConnection();
             const result = await connection.query("UPDATE usuario SET ? WHERE id_usuario = ?",[datos,id_usuario]);

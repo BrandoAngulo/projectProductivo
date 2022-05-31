@@ -1,7 +1,6 @@
 import { getConnection } from "../database/database";
 
-//async = nos permiten indicar que una funcion es asincrona osea que los procesos duran un tiempo
-//await = nos permite indicar que debemos esperar a que finalice cierto bloque de codigo
+
 //LISTAR
 const getpedidos = async (req, res) => {
     try {
@@ -14,7 +13,6 @@ const getpedidos = async (req, res) => {
     }
 };
 
-//obtener la peticion del lenguage por el parametro osea por medio de la url solo 1 un dato
 //LISTAR 1 DATO
 const getpedido = async (req, res) => {
 
@@ -77,13 +75,15 @@ const addPedido = async (req, res) => {
         const pedido = {codigo_pedido, id_cliente, id_estado};
         const connection = await getConnection();                                     
         const result = await connection.query("INSERT INTO pedido SET ?",pedido);
+        console.log(result);
         res.json({message: "pedido added"});//respuesta cuando se agregue el lenguaje
     } catch (error) {
         res.status(500);
         res.send(error.message);
     }
 };
-//exportar la funcion para poderla importar en cualquier otro lugar, se exporta mediante la llave methods
+
+//exportar la funcion
 export const methods = {
     getpedidos,
     getpedido,
@@ -91,3 +91,4 @@ export const methods = {
     deletePedido,
     updatePedido
 };
+

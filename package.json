@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/BrandoAngulo/createApiRestNode#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.0",
     "promise-mysql": "^5.2.0",
     "xpress": "^2.4.6"

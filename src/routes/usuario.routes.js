@@ -4,8 +4,8 @@ import { methods as usuarioController } from "../controllers/usuario.controller"
 const router = Router();
 
 //Rutas de usuario
-//listar 
-router.get("/", usuarioController.getusuarios);
+//listar
+router.get("/", usuarioController.getusuarios); 
 //listar un usuario
 router.get("/:id_usuario", usuarioController.getusuario);
 //INSERTAR

@@ -13,7 +13,7 @@ Content-Type: application/json
 }
 
 ### insertar peticiones POST
-POST http://localhost:3000/api/usuario
+POST http://localhost:3000/api/usuarios
 Content-Type: application/json
 
   {
@@ -25,7 +25,8 @@ Content-Type: application/json
     "correo": "claro.com",
     "celular": 3112254525,
     "referido": "12",
-    "rol": 1
+    "rol": 1,
+    "pass": 12345
   }
 
 ### DELETE
