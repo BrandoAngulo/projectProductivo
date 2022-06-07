@@ -6,7 +6,7 @@ import usuarioRoutes from "./routes/usuario.routes";
 
 const app = express();
 //settings
-app.set("port", 3000);
+app.set("port", 8000);
 
 //middlwares
 app.use(morgan("dev"));
