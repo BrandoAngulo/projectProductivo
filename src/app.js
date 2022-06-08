@@ -6,6 +6,8 @@ import usuarioRoutes from "./routes/usuario.routes";
 import rolRoutes from "./routes/rol.routes";
 import municipioRoutes from "./routes/municipio.routes";
 
+import departamentsRoutes from "./routes/departaments.routes";
+
 const app = express();
 //settings
 app.set("port", 8000);
@@ -19,5 +21,7 @@ app.use("/api/pedidos", pedidoRoutes);
 app.use("/api/usuarios", usuarioRoutes); 
 app.use("/api/roles", rolRoutes);
 app.use("/api/municipios", municipioRoutes)
+
+app.use("/api/departamentos", departamentsRoutes); 
 
 export default app ;
