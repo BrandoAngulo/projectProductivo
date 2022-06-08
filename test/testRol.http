@@ -1,0 +1,24 @@
+### Obtener todos los roles
+GET http://localhost:8000/api/roles
+
+### Obtener un solo rol
+GET http://localhost:8000/api/roles/2
+
+### Crear un rol
+POST http://localhost:8000/api/roles
+Content-Type: application/json
+
+{
+    "descripcion": "Rol prueba"
+}
+
+### Actualizar rol
+PUT http://localhost:8000/api/roles/4
+Content-Type: application/json
+
+{
+    "descripcion": "Este rol fue actualizado"
+}
+
+### Eliminar rol
+DELETE  http://localhost:8000/api/roles/4
