@@ -4,6 +4,7 @@ import morgan from "morgan";
 import pedidoRoutes from "./routes/pedido.routes";
 import usuarioRoutes from "./routes/usuario.routes";
 import rolRoutes from "./routes/rol.routes";
+import municipioRoutes from "./routes/municipio.routes";
 
 const app = express();
 //settings
@@ -17,5 +18,6 @@ app.use(express.json());
 app.use("/api/pedidos", pedidoRoutes); 
 app.use("/api/usuarios", usuarioRoutes); 
 app.use("/api/roles", rolRoutes);
+app.use("/api/municipios", municipioRoutes)
 
 export default app ;

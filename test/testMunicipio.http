@@ -1,0 +1,28 @@
+### Obtener todos los municipios 
+GET http://localhost:8000/api/municipios
+
+### Obtener un solo municipio 
+GET http://localhost:8000/api/municipios/2
+
+### Añadir o crear un municipio
+POST http://localhost:8000/api/municipios
+Content-Type: application/json
+
+{
+    "departamento_id": 1,
+    "codigo": 1,
+    "nombre": "Prueba"
+}
+
+### Actualizar municipio
+PUT http://localhost:8000/api/municipios/1127
+Content-Type: application/json
+
+{
+    "departamento_id": 1,
+    "codigo": 1,
+    "nombre": "mODIFICADO"
+}
+
+### eLIMINAR mUNICIPIO
+DELETE http://localhost:8000/api/municipios/1127
