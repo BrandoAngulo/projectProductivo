@@ -1,20 +1,18 @@
 ### GET = obtener lo que esta en la ip
 ###LISTAR TODO O / numero a seleccionar para ver por un solo dato
-GET http://localhost:8000/api/vendedor/1
+GET http://localhost:8000/api/clientes/2
 
 ### UPDATE
-PUT  http://localhost:8000/api/vendedor/1
+PUT  http://localhost:8000/api/clientes/2
 Content-Type: application/json
 
   {
-    "id_vendedor": 1,
-    "id_user": 2,
-    "codigo_vendedor": 999,
+    "id_user": 3,
     "password": 123456
   }
 
 ### insertar peticiones POST
-POST http://localhost:8000/api/usuarios
+POST http://localhost:8000/api/vendedor
 Content-Type: application/json
 
   {
