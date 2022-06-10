@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-04-2022 a las 20:12:15
--- Versión del servidor: 10.4.18-MariaDB
--- Versión de PHP: 8.0.3
+-- Tiempo de generación: 10-06-2022 a las 03:49:42
+-- Versión del servidor: 10.4.24-MariaDB
+-- Versión de PHP: 7.4.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,15 +29,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cliente` (
   `id_cliente` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL
+  `id_user` int(11) NOT NULL,
+  `password` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `cliente`
 --
 
-INSERT INTO `cliente` (`id_cliente`, `id_user`) VALUES
-(2, 3);
+INSERT INTO `cliente` (`id_cliente`, `id_user`, `password`) VALUES
+(2, 3, '123456'),
+(3, 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -123,17 +125,17 @@ CREATE TABLE `login` (
   `roles_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `log_id` int(11) NOT NULL,
-  `descripcion` varchar(30) NOT NULL
+  `descripcion` varchar(30) NOT NULL,
+  `password` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `login`
 --
 
-INSERT INTO `login` (`roles_id`, `user_id`, `log_id`, `descripcion`) VALUES
-(1, 1, 1, 'administrador del sistema'),
-(2, 2, 2, 'VENDEDOR'),
-(3, 3, 3, 'Cliente');
+INSERT INTO `login` (`roles_id`, `user_id`, `log_id`, `descripcion`, `password`) VALUES
+(2, 2, 2, 'VENDEDOR', NULL),
+(3, 3, 3, 'Cliente', NULL);
 
 -- --------------------------------------------------------
 
@@ -1298,7 +1300,8 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`id_pedido`, `codigo_pedido`, `id_cliente`, `id_estado`) VALUES
-(2, 1, 2, 1);
+(2, 3053, 2, 3),
+(4, 3054, 2, 5);
 
 -- --------------------------------------------------------
 
@@ -1337,17 +1340,21 @@ CREATE TABLE `usuario` (
   `correo` varchar(30) NOT NULL,
   `celular` bigint(10) NOT NULL,
   `referido` varchar(30) DEFAULT NULL,
-  `rol` int(11) NOT NULL
+  `rol` int(11) NOT NULL,
+  `pass` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `cedula`, `departamento`, `ciudad`, `direccion`, `correo`, `celular`, `referido`, `rol`) VALUES
-(1, 'usuario', 'fefe', 1144055178, 24, 1009, 'cra49#13-66', 'stiva@fff.com', 3105182526, '', 1),
-(2, 'klein', 'castilla', 1144055177, 24, 1009, 'cra49#13-66', 'stiva@fff.com', 3105182526, '', 2),
-(3, 'ines', 'amaran', 1144055187, 24, 1009, 'cra49#13-66', 'stiva@fff.com', 3105182526, 'local', 3);
+INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `cedula`, `departamento`, `ciudad`, `direccion`, `correo`, `celular`, `referido`, `rol`, `pass`) VALUES
+(2, 'Calvin-klein', 'castilla', 1144055177, 29, 2, 'cra49#13-66', 'stiva@fff.com', 2222222, '', 2, NULL),
+(3, 'ines', 'amaran', 1144055187, 24, 1009, 'cra49#13-66', 'stiva@fff.com', 3105182526, 'local', 3, NULL),
+(4, 'alum', 'manu', 1234567897, 29, 2, 'aa1544ss', '1as@aaa', 312345678, NULL, 3, NULL),
+(5, 'eee', 'dddd', 122345, 24, 1009, 'sasddd', 'qsdasdasd', 123456, '2', 1, '12345'),
+(6, 'root', '', 1144055179, 24, 1009, 'cra47#15-22', 'claro.com', 3112254525, '12', 1, '12345'),
+(7, 'root2', '', 1144055179, 24, 1009, 'cra47#15-22', 'mov.com', 3112254525, '2', 1, '123');
 
 -- --------------------------------------------------------
 
@@ -1358,15 +1365,16 @@ INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `cedula`, `departamen
 CREATE TABLE `vendedor` (
   `id_vendedor` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `codigo_vendedor` int(11) NOT NULL
+  `codigo_vendedor` int(11) NOT NULL,
+  `password` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `vendedor`
 --
 
-INSERT INTO `vendedor` (`id_vendedor`, `id_user`, `codigo_vendedor`) VALUES
-(1, 2, 999);
+INSERT INTO `vendedor` (`id_vendedor`, `id_user`, `codigo_vendedor`, `password`) VALUES
+(1, 2, 999, '123456');
 
 --
 -- Índices para tablas volcadas
@@ -1444,7 +1452,7 @@ ALTER TABLE `vendedor`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `departamentos`
@@ -1474,7 +1482,7 @@ ALTER TABLE `municipios`
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -1486,7 +1494,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `vendedor`
@@ -1502,42 +1510,42 @@ ALTER TABLE `vendedor`
 -- Filtros para la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  ADD CONSTRAINT `cliUsu_FK` FOREIGN KEY (`id_user`) REFERENCES `usuario` (`id_usuario`);
+  ADD CONSTRAINT `cliUsu_FK` FOREIGN KEY (`id_user`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `login`
 --
 ALTER TABLE `login`
-  ADD CONSTRAINT `logRol_FK` FOREIGN KEY (`roles_id`) REFERENCES `roles` (`id_rol`),
-  ADD CONSTRAINT `logUser_FK` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id_usuario`),
-  ADD CONSTRAINT `uslog_FK` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id_usuario`);
+  ADD CONSTRAINT `logRol_FK` FOREIGN KEY (`roles_id`) REFERENCES `roles` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `logUser_FK` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `uslog_FK` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `municipios`
 --
 ALTER TABLE `municipios`
-  ADD CONSTRAINT `municipios_ibfk_1` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id_departamento`);
+  ADD CONSTRAINT `municipios_ibfk_1` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id_departamento`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  ADD CONSTRAINT `PedcliUsu_FK` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`),
-  ADD CONSTRAINT `pedEsta_FK` FOREIGN KEY (`id_estado`) REFERENCES `estadopedido` (`id_estado`);
+  ADD CONSTRAINT `PedcliUsu_FK` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pedEsta_FK` FOREIGN KEY (`id_estado`) REFERENCES `estadopedido` (`id_estado`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `UsuRol_FK` FOREIGN KEY (`rol`) REFERENCES `roles` (`id_rol`),
+  ADD CONSTRAINT `UsuRol_FK` FOREIGN KEY (`rol`) REFERENCES `roles` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `usuDep_FK` FOREIGN KEY (`departamento`) REFERENCES `departamentos` (`id_departamento`),
-  ADD CONSTRAINT `usuMuni_FK` FOREIGN KEY (`ciudad`) REFERENCES `municipios` (`id_municipio`);
+  ADD CONSTRAINT `usuMuni_FK` FOREIGN KEY (`ciudad`) REFERENCES `municipios` (`id_municipio`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `vendedor`
 --
 ALTER TABLE `vendedor`
-  ADD CONSTRAINT `venUsu_FK` FOREIGN KEY (`id_user`) REFERENCES `usuario` (`id_usuario`);
+  ADD CONSTRAINT `venUsu_FK` FOREIGN KEY (`id_user`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
