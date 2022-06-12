@@ -6,7 +6,7 @@ const getDepartamentos = async (req, res) => {
     try {
     
     const connection = await getConnection();
-    const result = await connection.query("SELECT id_departamento, nombre, codigo FROM departamentos");
+    const result = await connection.query("SELECT id_departamento, nombre FROM departamentos");
     res.json(result);
         
     } catch (error) {
@@ -26,7 +26,7 @@ const getDepartamento = async (req, res) =>{
     console.log(req.params);
     const {id_departamento} = req.params 
     const connection = await getConnection();
-    const result = await connection.query("SELECT id_departamento, nombre, codigo FROM departamentos WHERE id_departamento = ?", id_departamento);
+    const result = await connection.query("SELECT id_departamento, nombre FROM departamentos WHERE id_departamento = ?", id_departamento);
     res.json(result);
 
     } catch (error) {
@@ -41,14 +41,14 @@ const getDepartamento = async (req, res) =>{
 const updateDepartamento = async (req, res) =>{
     
     const {id_departamento} = req.params;
-    const {nombre, codigo} = req.body;
+    const {nombre} = req.body;
 
-    if (id_departamento === undefined || nombre === undefinded || codigo === undefined) {
+    if (id_departamento === undefined || nombre === undefinded) {
         res.status(400).json({message:"Bad request. please fill all field"});   
     }
 
     try {
-        const datos = {id_departamento, nombre, codigo};
+        const datos = {id_departamento, nombre};
         console.log(req.params);
         const connection = await getConnection();
         const result = await connection.query("UPDATE departamentos SET ? WHERE id_departamento = ?",[datos,id_departamento]);
@@ -78,12 +78,12 @@ const deletedepartamento = async (req, res) => {
     const addDepartamento = async (req, res) => {
         try {
             
-            const {codigo, nombre}=req.body; 
+            const {nombre}=req.body; 
             
-            if (codigo === undefined || nombre === undefined) {
+            if (nombre === undefined) {
                 res.status(400).json({message: "Bad Request. Please fill all field. "});
             }
-            const datos = {codigo, nombre};
+            const datos = {nombre};
             const connection = await getConnection();                                     
             const result = await connection.query("INSERT INTO departamentos SET ?",datos);
             console.log(result);

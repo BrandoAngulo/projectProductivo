@@ -4,7 +4,7 @@ import { getConnection } from "../database/database";
 const getClientes = async (req, res) => {
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT id_cliente, id_user, password FROM cliente");
+        const result = await connection.query("SELECT id_cliente, persona FROM cliente");
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -19,7 +19,7 @@ try {
     console.log(req.params);
     const {id_cliente}=req.params;
     const connection = await getConnection();
-    const result = await connection.query("SELECT id_cliente, id_user, password FROM cliente WHERE id_cliente = ?",id_cliente);
+    const result = await connection.query("SELECT id_cliente, persona FROM cliente WHERE id_cliente = ?",id_cliente);
     res.json(result);
 } catch (error) {
     res.status(500);
@@ -30,12 +30,12 @@ try {
 //UPDATE
 const updateCliente = async (req, res) => {
     const {id_cliente} = req.params;
-    const {id_user,password} = req.body;
-if (id_cliente === undefined || id_user === undefined || password === undefined) {
+    const {persona} = req.body;
+if (id_cliente === undefined || persona === undefined) {
     res.status(400).json({message: "Bad Pequest. please fill all field "});
 }
     try {
-        const datos = {id_cliente, id_user, password};
+        const datos = {id_cliente, persona};
         console.log(req.params);
         const connection = await getConnection();
         const result = await connection.query("UPDATE cliente SET ? WHERE id_cliente = ?",[datos,id_cliente]);
@@ -64,11 +64,11 @@ const deleteCliente = async (req, res) => {
 //INSERTAR 
 const addCliente = async (req, res) => {
     try {
-        const {id_user,password}=req.body; 
-        if (id_user === undefined || password === undefined) {
+        const {persona}=req.body; 
+        if (persona === undefined) {
             res.status(400).json({message: "Bad Request. Please fill all field. "});
         }
-        const datos = {id_user,password};
+        const datos = {persona};
         const connection = await getConnection();                                     
         const result = await connection.query("INSERT INTO cliente SET ?",datos);
         console.log(result);

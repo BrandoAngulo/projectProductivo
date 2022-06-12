@@ -7,7 +7,7 @@ import bcryptjs from "bcryptjs";
 const getusuarios = async (req, res) => {
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT u.id_usuario, u.nombre, u.apellido, u.cedula, d.nombre departamento, m.nombre ciudad, u.direccion, u.correo, u.referido, r.descripcion perfil, u.pass password FROM usuario u inner JOIN roles r ON u.rol = r.id_rol inner join departamentos d on u.departamento = d.id_departamento inner join municipios m on u.ciudad = m.id_municipio;");
+        const result = await connection.query("SELECT id_usuario, nombre, password, rol FROM usuario");
         res.json(result);
         console.log(result);
     } catch (error) {
@@ -20,7 +20,7 @@ const getusuario = async(req, res) => {
     try {
         const {id_usuario} = req.params;
         const connection = await getConnection();
-        const result = await connection.query("SELECT u.id_usuario, u.nombre, u.apellido, u.cedula, d.nombre departamento, m.nombre ciudad, u.direccion, u.correo, u.referido, r.descripcion perfil FROM usuario u inner JOIN roles r ON u.rol = r.id_rol inner join departamentos d on u.departamento = d.id_departamento inner join municipios m on u.ciudad = m.id_municipio WHERE u.id_usuario = ? ",id_usuario);
+        const result = await connection.query("SELECT id_usuario, nombre, password, rol FROM usuario WHERE id_usuario = ? ",id_usuario);
         res.json(result);
         console.log(result);    
     } catch (error) {
@@ -32,14 +32,14 @@ const getusuario = async(req, res) => {
 //INSERTAR
 const addUsuario = async(req, res) => {
     try {
-        const {nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol, pass} = req.body;
+        const {nombre,rol, password} = req.body;
         
-        if (nombre === undefined || cedula === undefined || departamento === undefined || ciudad === undefined || direccion === undefined || correo === undefined ||  celular === undefined || referido === undefined || rol === undefined || pass === undefined ) {
+        if (nombre === undefined || password === undefined || rol === undefined) {
             res.status(400).json({message: "Bad Pequest. please fill all field "});
         };
 
         //let passHash = await bcryptjs.hash(pass, 8)
-        const datos = {nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol, pass:passHash};
+        const datos = {nombre, password, rol};
         const connection = await getConnection();
         const result = await connection.query("INSERT INTO usuario SET ?",datos);
         res.json("Message:  User added");
@@ -68,13 +68,13 @@ const deleteUsuario = async(req, res) => {
 //UPDATE
 const updateUsuario = async (req, res) => {
     const {id_usuario} = req.params;
-    const {nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol, pass} = req.body; 
+    const {nombre, rol, password} = req.body; 
     
-    if (id_usuario ===undefined ||nombre === undefined || cedula === undefined || departamento === undefined || ciudad === undefined || direccion === undefined || correo === undefined ||  celular === undefined || referido === undefined || rol === undefined || pass === undefined) {
+    if (id_usuario === undefined ||nombre === undefined || password === undefined || rol === undefined) {
         res.status(400).json({message: "Bad Pequest. please fill all field "});
     }
     try {
-            const datos = {id_usuario, nombre, cedula, departamento, ciudad, direccion, correo,  celular, referido, rol, pass}; 
+            const datos = {id_usuario, nombre, password, rol}; 
             console.log(req.params);
             const connection = await getConnection();
             const result = await connection.query("UPDATE usuario SET ? WHERE id_usuario = ?",[datos,id_usuario]);
