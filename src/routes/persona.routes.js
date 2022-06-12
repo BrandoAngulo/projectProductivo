@@ -4,14 +4,14 @@ import { methods as personaController } from "../controllers/persona.controller"
 const router = Router();
 
 //rutas 
-router.get("/", personaController.getRoles);
+router.get("/", personaController.getPersonas);
 
-router.get("/:idRol", personaController.getRol);
+router.get("/:id_persona", personaController.getpersona);
 
-router.post("/", personaController.addRol);
+router.post("/", personaController.addPersona);
 
-router.delete("/:idRol", personaController.deleteRol);
+router.delete("/:id_persona", personaController.deletePersona);
 
-router.put("/:idRol", personaController.updateRol);
+router.put("/:id_persona", personaController.updatePersona);
 
 export default router; 

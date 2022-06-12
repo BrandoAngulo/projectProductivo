@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-06-2022 a las 06:09:45
+-- Tiempo de generación: 12-06-2022 a las 16:08:30
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 7.4.28
 
@@ -31,6 +31,13 @@ CREATE TABLE `cliente` (
   `id_cliente` int(11) NOT NULL,
   `persona` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`id_cliente`, `persona`) VALUES
+(4, 3);
 
 -- --------------------------------------------------------
 
@@ -97,6 +104,14 @@ CREATE TABLE `empleado` (
   `usuario` int(11) DEFAULT NULL,
   `persona` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `empleado`
+--
+
+INSERT INTO `empleado` (`id_empleado`, `codigo`, `fecha_ingreso`, `fecha_salida`, `area`, `usuario`, `persona`) VALUES
+(1, '002', '2022-03-01', NULL, 'Bodega', 1, 2),
+(2, 'admin01', '2022-03-01', NULL, 'Administrativo', 3, 6);
 
 -- --------------------------------------------------------
 
@@ -1255,6 +1270,13 @@ CREATE TABLE `pedido` (
   `municipio` bigint(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `pedido`
+--
+
+INSERT INTO `pedido` (`id_pedido`, `codigo_pedido`, `detalle`, `cliente`, `empleado`, `estado`, `fechayhora`, `direccion_envio`, `municipio`) VALUES
+(6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1004);
+
 -- --------------------------------------------------------
 
 --
@@ -1267,7 +1289,6 @@ CREATE TABLE `persona` (
   `apellido` varchar(255) DEFAULT NULL,
   `tipodoc` enum('Cedula','Pasaporte') DEFAULT NULL,
   `numdocumento` bigint(10) DEFAULT NULL,
-  `ciudad` bigint(11) NOT NULL,
   `correo` varchar(255) NOT NULL,
   `telefono` bigint(10) DEFAULT NULL,
   `municipio` bigint(11) DEFAULT NULL,
@@ -1278,13 +1299,13 @@ CREATE TABLE `persona` (
 -- Volcado de datos para la tabla `persona`
 --
 
-INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `tipodoc`, `numdocumento`, `ciudad`, `correo`, `telefono`, `municipio`, `direccion`) VALUES
-(2, 'Calvin-klein', 'castilla', NULL, 1144055177, 2, 'stiva@fff.com', 2222222, NULL, NULL),
-(3, 'ines', 'amaran', NULL, 1144055187, 1009, 'stiva@fff.com', 3105182526, NULL, NULL),
-(4, 'alum', 'manu', NULL, 1234567897, 2, '1as@aaa', 312345678, NULL, NULL),
-(5, 'eee', 'dddd', NULL, 122345, 1009, 'qsdasdasd', 123456, NULL, NULL),
-(6, 'root', '', NULL, 1144055179, 1009, 'claro.com', 3112254525, NULL, NULL),
-(7, 'root2', '', NULL, 1144055179, 1009, 'mov.com', 3112254525, NULL, NULL);
+INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `tipodoc`, `numdocumento`, `correo`, `telefono`, `municipio`, `direccion`) VALUES
+(2, 'Calvin-klein', 'castilla', NULL, 1144055177, 'stiva@fff.com', 2222222, NULL, NULL),
+(3, 'ines', 'amaran', NULL, 1144055187, 'stiva@fff.com', 3105182526, NULL, NULL),
+(4, 'alum', 'manu', NULL, 1234567897, '1as@aaa', 312345678, NULL, NULL),
+(5, 'eee', 'dddd', NULL, 122345, 'qsdasdasd', 123456, NULL, NULL),
+(6, 'root', '', NULL, 1144055179, 'claro.com', 3112254525, NULL, NULL),
+(7, 'root2', '', NULL, 1144055179, 'mov.com', 3112254525, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1298,6 +1319,14 @@ CREATE TABLE `usuario` (
   `password` varchar(255) DEFAULT NULL,
   `rol` enum('empleado','root','cliente') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id_usuario`, `nombre`, `password`, `rol`) VALUES
+(1, 'vendedor001', '12345', 'root'),
+(3, 'admin', 'admin', 'root');
 
 --
 -- Índices para tablas volcadas
@@ -1365,13 +1394,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `municipios`
@@ -1383,7 +1412,7 @@ ALTER TABLE `municipios`
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
@@ -1395,7 +1424,7 @@ ALTER TABLE `persona`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas

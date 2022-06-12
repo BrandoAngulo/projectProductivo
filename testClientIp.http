@@ -1,25 +1,35 @@
 ### GET = obtener lo que esta en la ip
 ###LISTAR TODO O / numero a seleccionar para ver por un solo dato
-GET http://localhost:8000/api/empleado/
+GET http://localhost:8000/api/persona/5
 
 ### UPDATE
-PUT  http://localhost:8000/api/usuario/1
+PUT  http://localhost:8000/api/persona/5
 Content-Type: application/json
 
   {
-    "nombre": "vendedor001",
-    "password": "12345",
-    "rol": "root"
+    "nombre": "mano",
+    "apellido": "brazo",
+    "tipodoc": "Cedula",
+    "numdocumento": 122345,
+    "correo": "qsdasdasd@",
+    "telefono": 12345678,
+    "municipio": 1004,
+    "direccion": "en la home"
   }
 
 ### insertar peticiones POST
-POST http://localhost:8000/api/usuario
+POST http://localhost:8000/api/persona
 Content-Type: application/json
 
 {
-    "nombre": "vendedor002",
-    "password": "11111",
-    "rol": "empleado"
+    "nombre": "mani",
+    "apellido": "pasas",
+    "tipodoc": "Pasaporte",
+    "numdocumento": 1223458910,
+    "correo": "maniconpasa@frito.com",
+    "telefono": 12345678,
+    "municipio": 1,
+    "direccion": "en la freidora"
   }
 
 ### DELETE

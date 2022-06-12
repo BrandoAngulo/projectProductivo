@@ -1,10 +1,10 @@
 import { getConnection } from "../database/database";
 
 //LISTAR
-const getRoles = async (req, res) => {
+const getPersonas = async (req, res) => {
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT `id_rol`, `descripcion` FROM `roles`");
+        const result = await connection.query("SELECT id_persona, nombre, apellido, tipodoc, numdocumento, correo, telefono, municipio, direccion FROM persona");
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -13,12 +13,12 @@ const getRoles = async (req, res) => {
 };
 
 //LISTAR 1 DATO
-const getRol = async (req, res) => {
+const getpersona = async (req, res) => {
 
 try {
-    const {idRol} = req.params;
+    const {id_persona} = req.params;
     const connection = await getConnection();
-    const result = await connection.query("SELECT `id_rol`, `descripcion` FROM `roles` WHERE `id_rol` = ?", idRol);//recibe el parametro id que hemos hecho con la const por parametro 
+    const result = await connection.query("SELECT id_persona, nombre, apellido, tipodoc, numdocumento, correo, telefono, municipio, direccion FROM persona WHERE id_persona = ?", id_persona);//recibe el parametro id que hemos hecho con la const por parametro 
     res.json(result);
 } catch (error) {
     res.status(500);
@@ -27,16 +27,16 @@ try {
 };
 
 //UPDATE
-const updateRol = async (req, res) => {
-    const {idRol} = req.params;
-    const {descripcion} = req.body;
-    if (idRol === undefined || descripcion === undefined){
+const updatePersona = async (req, res) => {
+    const {id_persona} = req.params;
+    const {nombre, apellido, tipodoc, numdocumento, correo, telefono, municipio, direccion} = req.body;
+    if (id_persona === undefined || nombre === undefined || apellido === undefined || tipodoc === undefined || numdocumento === undefined || correo === undefined || telefono === undefined || municipio === undefined || direccion === undefined ){
         res.status(400).json({message: "Bad Pequest. please fill all field "});
     }
     try {
-        const rol = {descripcion};
+        const dato = {id_persona, nombre, apellido, tipodoc, numdocumento, correo, telefono, municipio, direccion};
         const connection = await getConnection();
-        const result = await connection.query("UPDATE roles SET ? WHERE id_rol = ?", [rol,idRol]);//el primer ? es por los parametros que se le dan y el segundo para el id que se va a editar 
+        const result = await connection.query("UPDATE persona SET ? WHERE id_persona = ?", [dato,id_persona]);
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -45,12 +45,12 @@ const updateRol = async (req, res) => {
     };
 
 //DELETE
-const deleteRol = async (req, res) => {
+const deletePersona = async (req, res) => {
 
     try {
-        const {idRol}=req.params;
+        const {id_persona}=req.params;
         const connection = await getConnection();
-        const result = await connection.query("DELETE FROM roles WHERE id_rol = ?", idRol);//recibe el parametro id que hemos hecho con la const por parametro 
+        const result = await connection.query("DELETE FROM persona WHERE id_persona = ?", id_persona);//recibe el parametro id que hemos hecho con la const por parametro 
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -59,20 +59,17 @@ const deleteRol = async (req, res) => {
     };
 
 //INSERTAR 
-const addRol = async (req, res) => {
+const addPersona = async (req, res) => {
     try {
-        //creacion de constantes que tenemos en la db para asi hacer la inserccion de datos a la misma db 
-        const {descripcion} = req.body; //con req.body quiere decir que enviamos la peticion por el cuerpo del codigo
-        //condicional si alguno de los campos se envian vacios
-        if (descripcion === undefined) {
-            res.status(400).json({message: "Bad Request. Please fill all field. "});//solicitud mala. porfavor rellene todas los campos
+        const {nombre, apellido, tipodoc, numdocumento, correo, telefono, municipio, direccion} = req.body; 
+            if (nombre === undefined || apellido === undefined || tipodoc === undefined || numdocumento === undefined || correo === undefined || telefono === undefined || municipio === undefined || direccion === undefined) {
+            res.status(400).json({message: "Bad Request. Please fill all field. "});
         }
-        //creacion de objeto para hacer la inserccion sin necesidad de digitar el query con tantos datos
-        const rol = {descripcion};
+        const dato = {nombre, apellido, tipodoc, numdocumento, correo, telefono, municipio, direccion};
         const connection = await getConnection();                                     
-        const result = await connection.query("INSERT INTO roles SET ?", rol);
+        const result = await connection.query("INSERT INTO persona SET ?", dato);
         console.log(result);
-        res.json({message: "rol added"});//respuesta cuando se agregue el lenguaje
+        res.json({message: "persona added"});//respuesta cuando se agregue una persona
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -81,9 +78,9 @@ const addRol = async (req, res) => {
 
 //exportar la funcion
 export const methods = {
-    getRoles,
-    getRol,
-    addRol,
-    deleteRol,
-    updateRol
+    getPersonas,
+    getpersona,
+    addPersona,
+    deletePersona,
+    updatePersona
 };
