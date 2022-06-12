@@ -1250,7 +1250,7 @@ CREATE TABLE `pedido` (
   `cliente` int(11) DEFAULT NULL,
   `empleado` int(11) DEFAULT NULL,
   `estado` enum('espera','separacion','empaque','Ruta','facturacion','finalizado y listo') DEFAULT NULL,
-  `fechayhora` date DEFAULT NULL,
+  `fechayhora` datetime DEFAULT NULL,
   `direccion_envio` varchar(255) DEFAULT NULL,
   `municipio` bigint(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
